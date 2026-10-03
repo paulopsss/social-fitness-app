@@ -27,7 +27,11 @@ public class SessionAuthFilter implements Filter {
         boolean loggedIn = session != null && session.getAttribute("user") != null;
 
         if (!loggedIn) {
-            res.sendRedirect("/Login_page.html");
+            if (req.getRequestURI().startsWith("/api/")) {
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            } else {
+                res.sendRedirect("/Login_page.html");
+            }
             return;
         }
         chain.doFilter(request, response);

@@ -15,7 +15,7 @@ public class SecurityConfig {
     public FilterRegistrationBean<SessionAuthFilter> sessionAuthFilter() {
         FilterRegistrationBean<SessionAuthFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new SessionAuthFilter());
-        registration.addUrlPatterns("/Main_page.html");
+        registration.addUrlPatterns("/Main_page.html", "/Workouts_page.html", "/api/*");
         return registration;
     }
 }
