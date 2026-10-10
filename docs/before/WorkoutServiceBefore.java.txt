@@ -1,0 +1,36 @@
+// BEFORE the Observer pattern (what the Log Workout code would look like
+// if we wrote it the direct way). Kept as .txt so it is not compiled.
+package com.fitly.app.service;
+
+import com.fitly.app.model.Workout;
+import java.time.LocalDate;
+
+public class WorkoutService {
+
+    // The service must know every follow-up step by name.
+    private final GoalService goalService;
+    private final NotificationService notificationService;
+    // Adding analytics later means: a new field, a new constructor argument,
+    // a new call below, and an edit to every test that builds this class.
+
+    public WorkoutService(GoalService goalService, NotificationService notificationService) {
+        this.goalService = goalService;
+        this.notificationService = notificationService;
+    }
+
+    public Workout logWorkout(String userEmail, String type, int durationMinutes,
+                              int calories, LocalDate date) {
+        Workout workout = new Workout(userEmail, type, durationMinutes, calories, date);
+
+        // Hard wired, in a fixed order. Whoever owns goals and whoever owns
+        // notifications both have to edit this same method.
+        goalService.addProgress(userEmail, date, durationMinutes);
+        notificationService.send(userEmail, "Workout logged: " + type + ", " + durationMinutes + " min");
+
+        return workout;
+    }
+}
+
+// Collaborators the service above depends on directly:
+//   class GoalService         { void addProgress(String userEmail, LocalDate date, int minutes) { ... } }
+//   class NotificationService { void send(String userEmail, String message) { ... } }

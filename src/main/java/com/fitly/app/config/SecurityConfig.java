@@ -1,5 +1,7 @@
-package com.fitly.app;
+package com.fitly.app.config;
 
+import com.fitly.app.web.Pages;
+import com.fitly.app.web.SessionAuthFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +17,7 @@ public class SecurityConfig {
     public FilterRegistrationBean<SessionAuthFilter> sessionAuthFilter() {
         FilterRegistrationBean<SessionAuthFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new SessionAuthFilter());
-        registration.addUrlPatterns("/Main_page.html");
+        registration.addUrlPatterns(Pages.DASHBOARD);
         return registration;
     }
 }

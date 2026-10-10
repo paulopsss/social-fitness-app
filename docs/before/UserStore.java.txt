@@ -1,3 +1,4 @@
+// BEFORE (original code). Kept as .txt so it is not compiled.
 package com.fitly.app;
 
 import org.springframework.stereotype.Component;
@@ -5,14 +6,10 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Temporary in-memory user storage. Users disappear when the app restarts.
- * TODO: replace with a real database and hash passwords (for example BCrypt)
- * before storing them. Plain text passwords are for early testing only.
- */
 @Component
 public class UserStore {
 
+    // Passwords are stored as plain text.
     private final Map<String, String> users = new ConcurrentHashMap<>();
 
     public boolean exists(String email) {
@@ -23,6 +20,8 @@ public class UserStore {
         users.put(email, password);
     }
 
+    // SRP + OCP violation: this class stores users AND decides how passwords are compared.
+    // To add hashing, this method has to be edited.
     public boolean checkCredentials(String email, String password) {
         String stored = users.get(email);
         return stored != null && stored.equals(password);
