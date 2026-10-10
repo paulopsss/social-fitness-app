@@ -1,3 +1,4 @@
+// BEFORE (original code). Kept as .txt so it is not compiled.
 package com.fitly.app;
 
 import jakarta.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
 
+    // DIP violation: depends on the concrete UserStore class.
     private final UserStore userStore;
 
     public AuthController(UserStore userStore) {
@@ -19,6 +21,7 @@ public class AuthController {
                         @RequestParam String password,
                         HttpSession session) {
         if (userStore.checkCredentials(email, password)) {
+            // SRP violation: the controller also decides how login is stored ("user").
             session.setAttribute("user", email);
             return "redirect:/Main_page.html";
         }
@@ -29,6 +32,7 @@ public class AuthController {
     public String register(@RequestParam String email,
                            @RequestParam String password,
                            HttpSession session) {
+        // SRP violation: a business rule (no duplicate emails, then log in) sits in the controller.
         if (userStore.exists(email)) {
             return "redirect:/Register_page.html?error=1";
         }
