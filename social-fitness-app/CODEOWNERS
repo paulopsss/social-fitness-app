@@ -1,0 +1,3 @@
+# Replace @fitly/maintainers with the actual GitHub team slug before enabling ownership-based review routing.
+* @fitly/maintainers
+/.github/ @fitly/maintainers

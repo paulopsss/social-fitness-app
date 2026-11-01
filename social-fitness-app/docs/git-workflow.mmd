@@ -1,0 +1,11 @@
+flowchart LR
+  A[Issue or task] --> B[Feature branch from main]
+  B --> C[Commits using Conventional Commits]
+  C --> D[Pull request to main]
+  D --> E[CI: Checkstyle, JUnit tests, Maven package]
+  E -->|Pass| F[Teammate review and approval]
+  E -->|Fail| B
+  F -->|Changes requested| B
+  F -->|Approved and conversations resolved| G[Squash merge to protected main]
+  G --> H[Release candidate]
+  H --> I[Version tag and approved production deployment]

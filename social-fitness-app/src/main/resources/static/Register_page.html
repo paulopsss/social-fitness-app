@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fitly - Register</title>
+  <link rel="stylesheet" href="Main_page.css" />
+</head>
+<body>
+  <header class="navbar">
+    <span class="brand">Fitly</span>
+  </header>
+
+  <main class="screen">
+    <h1>Create account</h1>
+    <p class="subtitle">Let's get you set up</p>
+
+    <p class="error" id="error" hidden>That email already has an account.</p>
+
+    <form action="/register" method="post">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button class="primary" type="submit">Create account</button>
+    </form>
+
+    <h2>Already have an account?</h2>
+    <a class="button" href="Login_page.html">Log in</a>
+  </main>
+  <script>
+    if (location.search.includes("error=1")) document.getElementById("error").hidden = false;
+  </script>
+</body>
+</html>
