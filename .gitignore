@@ -7,3 +7,6 @@ target/
 
 # OS files
 .DS_Store
+
+# local H2 database files
+data/
