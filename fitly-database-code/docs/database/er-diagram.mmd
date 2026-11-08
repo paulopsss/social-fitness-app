@@ -1,0 +1,89 @@
+erDiagram
+    USERS ||--o{ WORKOUTS : logs
+    WORKOUT_TYPES ||--o{ WORKOUTS : classifies
+    WORKOUTS ||--o{ WORKOUT_EXERCISES : contains
+    EXERCISES ||--o{ WORKOUT_EXERCISES : "used in"
+    USERS ||--o{ GOALS : sets
+    USERS ||--o{ FRIENDSHIPS : "sends request"
+    USERS ||--o{ FRIENDSHIPS : "receives request"
+    USERS ||--o{ POSTS : writes
+    WORKOUTS |o--o{ POSTS : "shared in"
+    POSTS ||--o{ COMMENTS : has
+    USERS ||--o{ COMMENTS : writes
+    POSTS ||--o{ POST_LIKES : receives
+    USERS ||--o{ POST_LIKES : gives
+
+    USERS {
+        BIGINT id PK
+        VARCHAR email UK "NOT NULL"
+        VARCHAR password_hash "NOT NULL"
+        VARCHAR display_name
+        VARCHAR bio
+        TIMESTAMP created_at "NOT NULL"
+    }
+    WORKOUT_TYPES {
+        BIGINT id PK
+        VARCHAR name UK "NOT NULL"
+        VARCHAR category "CHECK in list"
+    }
+    WORKOUTS {
+        BIGINT id PK
+        BIGINT user_id FK "NOT NULL"
+        BIGINT workout_type_id FK "NOT NULL"
+        DATE workout_date "NOT NULL"
+        INT duration_minutes "CHECK > 0"
+        INT calories "CHECK >= 0"
+        VARCHAR notes
+        TIMESTAMP created_at
+    }
+    EXERCISES {
+        BIGINT id PK
+        VARCHAR name UK "NOT NULL"
+        VARCHAR muscle_group "NOT NULL"
+    }
+    WORKOUT_EXERCISES {
+        BIGINT id PK
+        BIGINT workout_id FK "UK with exercise_id"
+        BIGINT exercise_id FK
+        INT sets "CHECK > 0"
+        INT reps "CHECK > 0"
+        DECIMAL weight_kg "NULL or >= 0"
+    }
+    GOALS {
+        BIGINT id PK
+        BIGINT user_id FK "NOT NULL"
+        VARCHAR goal_type "CHECK in list"
+        INT target_value "CHECK > 0"
+        DATE start_date "NOT NULL"
+        DATE end_date ">= start_date"
+        VARCHAR status "CHECK in list"
+        TIMESTAMP created_at
+    }
+    FRIENDSHIPS {
+        BIGINT id PK
+        BIGINT requester_id FK "UK with addressee_id"
+        BIGINT addressee_id FK "<> requester_id"
+        VARCHAR status "CHECK in list"
+        TIMESTAMP created_at
+        TIMESTAMP responded_at
+    }
+    POSTS {
+        BIGINT id PK
+        BIGINT user_id FK "NOT NULL"
+        BIGINT workout_id FK "NULL, SET NULL"
+        VARCHAR content "NOT NULL"
+        INT like_count "denormalized"
+        TIMESTAMP created_at
+    }
+    COMMENTS {
+        BIGINT id PK
+        BIGINT post_id FK "NOT NULL"
+        BIGINT user_id FK "NOT NULL"
+        VARCHAR content "NOT NULL"
+        TIMESTAMP created_at
+    }
+    POST_LIKES {
+        BIGINT post_id PK,FK
+        BIGINT user_id PK,FK
+        TIMESTAMP created_at
+    }
