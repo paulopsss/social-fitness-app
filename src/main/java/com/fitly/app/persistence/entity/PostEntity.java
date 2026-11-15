@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Maps the posts table: a feed entry, optionally about one workout. */
@@ -51,7 +52,7 @@ public class PostEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createdAt ASC")
-    private List<CommentEntity> comments = new ArrayList<>();
+    private final List<CommentEntity> comments = new ArrayList<>();
 
     protected PostEntity() {
     }
@@ -108,6 +109,6 @@ public class PostEntity {
     }
 
     public List<CommentEntity> getComments() {
-        return comments;
+        return Collections.unmodifiableList(comments);
     }
 }
