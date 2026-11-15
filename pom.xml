@@ -64,6 +64,37 @@
           <suppressionsLocation>config/checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
         </configuration>
+        <executions>
+          <execution>
+            <!-- Run with: mvn checkstyle:checkstyle@metrics (reports every method's complexity) -->
+            <id>metrics</id>
+            <configuration>
+              <configLocation>config/checkstyle-metrics.xml</configLocation>
+              <outputFile>${project.build.directory}/checkstyle-metrics.xml</outputFile>
+              <failOnViolation>false</failOnViolation>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
