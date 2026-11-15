@@ -15,18 +15,80 @@
   </header>
 
   <main class="screen">
-    <h1>Good morning</h1>
-    <p class="subtitle">Ready to move today?</p>
+    <h1 id="greeting">Hello</h1>
+    <p class="subtitle" id="who"></p>
+    <p class="error" id="message" role="alert" hidden></p>
 
-    <h2>Today</h2>
-    <button class="primary">Start workout</button>
+    <h2>Weekly goal</h2>
+    <p id="goal-text">No goal yet. Set a target in minutes per week.</p>
+    <div class="bar" id="goal-bar" hidden><div class="bar-fill" id="goal-fill"></div></div>
+    <form id="goal-form" class="inline-form">
+      <input type="number" id="goal-minutes" min="1" max="10080" placeholder="Minutes per week" required />
+      <button type="submit" class="small">Set goal</button>
+    </form>
 
-    <h2>Your activity</h2>
-    <button>View progress</button>
-    <button>Workout history</button>
+    <h2 id="workout-heading">Log a workout</h2>
+    <form id="workout-form">
+      <div class="field">
+        <label for="type">Type</label>
+        <select id="type" required></select>
+      </div>
+      <div class="field">
+        <label for="minutes">Minutes</label>
+        <input type="number" id="minutes" min="1" required />
+      </div>
+      <div class="field">
+        <label for="calories">Calories (optional)</label>
+        <input type="number" id="calories" min="0" />
+      </div>
+      <div class="field">
+        <label for="date">Date</label>
+        <input type="date" id="date" required />
+      </div>
+      <div class="field">
+        <label for="notes">Notes (optional)</label>
+        <input type="text" id="notes" maxlength="500" />
+      </div>
+      <button type="submit" class="primary" id="workout-submit">Log workout</button>
+      <button type="button" id="workout-cancel" hidden>Cancel edit</button>
+    </form>
 
-    <h2>Settings</h2>
-    <button>Edit profile</button>
+    <h2>Your workouts</h2>
+    <ul class="list" id="workouts"></ul>
+
+    <h2>Last 30 days</h2>
+    <ul class="list" id="analytics"></ul>
+
+    <h2>Friends</h2>
+    <form id="friend-form" class="inline-form">
+      <input type="email" id="friend-email" placeholder="Friend's email" required />
+      <button type="submit" class="small">Add</button>
+    </form>
+    <h3 class="sub">Requests for you</h3>
+    <ul class="list" id="requests"></ul>
+    <h3 class="sub">Your friends</h3>
+    <ul class="list" id="friends"></ul>
+
+    <h2>Activity feed</h2>
+    <ul class="list" id="feed"></ul>
+
+    <h2>Notifications</h2>
+    <ul class="list" id="notifications"></ul>
+
+    <h2>Profile</h2>
+    <form id="profile-form">
+      <div class="field">
+        <label for="display-name">Display name</label>
+        <input type="text" id="display-name" maxlength="50" />
+      </div>
+      <div class="field">
+        <label for="bio">Bio</label>
+        <input type="text" id="bio" maxlength="500" />
+      </div>
+      <button type="submit">Save profile</button>
+    </form>
   </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
