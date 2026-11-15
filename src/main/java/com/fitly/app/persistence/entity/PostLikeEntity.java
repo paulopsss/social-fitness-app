@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 
 /** Maps post_likes: who liked which post. The composite key stops double likes. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "post_likes")
 public class PostLikeEntity {
 

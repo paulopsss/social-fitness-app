@@ -22,6 +22,7 @@ import java.util.List;
 
 /** Maps the workouts table: one logged session. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "workouts")
 public class WorkoutEntity {
 

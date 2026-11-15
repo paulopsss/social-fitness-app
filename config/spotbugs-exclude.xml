@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Findings that were reviewed and accepted. Each entry says why.
+-->
+<FindBugsFilter>
+  <!--
+    JPA entities hold references to other entities (user, workout, post).
+    Hibernate needs these as shared references, so copying them defensively
+    would break the mapping. Collection getters already return read-only views.
+    Entities also cannot be final because Hibernate creates proxy subclasses,
+    so CT_CONSTRUCTOR_THROW (finalizer attack) does not apply.
+  -->
+  <Match>
+    <Package name="com.fitly.app.persistence.entity"/>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2,CT_CONSTRUCTOR_THROW"/>
+  </Match>
+  <!--
+    False positive: PREFIX.equals(parts[0]) compares the public text "pbkdf2",
+    not a secret. The secret hash comparison uses MessageDigest.isEqual, which
+    runs in constant time.
+  -->
+  <Match>
+    <Class name="com.fitly.app.security.Pbkdf2PasswordHasher"/>
+    <Method name="verify"/>
+    <Bug pattern="UNSAFE_HASH_EQUALS"/>
+  </Match>
+</FindBugsFilter>

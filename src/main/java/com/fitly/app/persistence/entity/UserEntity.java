@@ -17,6 +17,7 @@ import java.util.List;
 
 /** Maps the users table. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "users")
 public class UserEntity {
 

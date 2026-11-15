@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
  * Two foreign keys point at users, which is how a many-to-many from a table to itself is stored.
  */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "friendships")
 public class FriendshipEntity {
 

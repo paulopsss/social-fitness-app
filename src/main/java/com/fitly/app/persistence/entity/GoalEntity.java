@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 
 /** Maps the goals table: a user's weekly target. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "goals")
 public class GoalEntity {
 

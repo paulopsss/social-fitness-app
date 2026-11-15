@@ -61,6 +61,7 @@
           <consoleOutput>true</consoleOutput>
           <failOnViolation>true</failOnViolation>
           <violationSeverity>error</violationSeverity>
+          <suppressionsLocation>config/checkstyle-suppressions.xml</suppressionsLocation>
           <includeTestSourceDirectory>false</includeTestSourceDirectory>
         </configuration>
       </plugin>
@@ -82,6 +83,7 @@
         <artifactId>spotbugs-maven-plugin</artifactId>
         <version>4.8.6.6</version>
         <configuration>
+          <excludeFilterFile>config/spotbugs-exclude.xml</excludeFilterFile>
           <effort>Max</effort>
           <threshold>Low</threshold>
           <failOnError>false</failOnError>

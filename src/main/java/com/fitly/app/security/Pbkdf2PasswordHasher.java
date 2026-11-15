@@ -62,10 +62,11 @@ public final class Pbkdf2PasswordHasher implements PasswordHasher {
         if (rawPassword == null || storedHash == null) {
             return false;
         }
-        return verify(rawPassword, storedHash.split("\\$"));
+        return verify(rawPassword, storedHash);
     }
 
-    private static boolean verify(String rawPassword, String[] parts) {
+    private static boolean verify(String rawPassword, String storedHash) {
+        String[] parts = storedHash.split("\\$");
         if (parts.length != HASH_PARTS || !PREFIX.equals(parts[PREFIX_INDEX])) {
             return false;
         }

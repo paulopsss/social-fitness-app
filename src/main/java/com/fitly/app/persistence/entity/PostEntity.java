@@ -21,6 +21,7 @@ import java.util.List;
 
 /** Maps the posts table: a feed entry, optionally about one workout. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "posts")
 public class PostEntity {
 
