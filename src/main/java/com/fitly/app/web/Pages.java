@@ -9,6 +9,13 @@ public final class Pages {
     public static final String DASHBOARD = "/Main_page.html";
     public static final String ERROR_QUERY = "?error=1";
 
+    private static final String REDIRECT_PREFIX = "redirect:";
+
     private Pages() {
+    }
+
+    /** The Spring MVC view name that redirects the browser to the given path. */
+    public static String redirectTo(String path) {
+        return REDIRECT_PREFIX + path;
     }
 }

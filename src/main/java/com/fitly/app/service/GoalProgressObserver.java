@@ -20,17 +20,17 @@ public class GoalProgressObserver implements WorkoutObserver {
 
     @Override
     public void onWorkoutLogged(Workout workout) {
-        minutesByWeek.merge(WeekKey.of(workout.userEmail(), workout.date()),
+        minutesByWeek.merge(WeekKey.forDate(workout.userEmail(), workout.date()),
                 workout.durationMinutes(), Integer::sum);
     }
 
     /** Total minutes the user logged in the week that contains the given date. */
     public int minutesInWeekOf(String userEmail, LocalDate dateInWeek) {
-        return minutesByWeek.getOrDefault(WeekKey.of(userEmail, dateInWeek), 0);
+        return minutesByWeek.getOrDefault(WeekKey.forDate(userEmail, dateInWeek), 0);
     }
 
     private record WeekKey(String userEmail, int weekBasedYear, int week) {
-        static WeekKey of(String userEmail, LocalDate date) {
+        static WeekKey forDate(String userEmail, LocalDate date) {
             return new WeekKey(userEmail,
                     date.get(IsoFields.WEEK_BASED_YEAR),
                     date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR));

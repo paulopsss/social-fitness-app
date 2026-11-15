@@ -63,6 +63,7 @@ public class FriendshipEntity {
         }
     }
 
+    /** Accepts or declines the request and records when the answer was given. */
     public void respond(boolean accepted) {
         this.status = accepted ? FriendshipStatus.ACCEPTED : FriendshipStatus.DECLINED;
         this.respondedAt = LocalDateTime.now();

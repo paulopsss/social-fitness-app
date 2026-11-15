@@ -16,9 +16,12 @@ import java.util.Optional;
  */
 public interface UserRepository {
 
+    /** True when an account with this email already exists. */
     boolean existsByEmail(String email);
 
+    /** The account with this email, or empty when there is none. */
     Optional<User> findByEmail(String email);
 
+    /** Stores a new account, or replaces the one with the same email. */
     void save(User user);
 }

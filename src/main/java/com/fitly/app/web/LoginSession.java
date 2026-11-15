@@ -14,6 +14,7 @@ public final class LoginSession {
     private LoginSession() {
     }
 
+    /** Marks the session as logged in for this email. */
     public static void start(HttpSession session, String email) {
         session.setAttribute(USER_KEY, email);
     }
@@ -23,6 +24,7 @@ public final class LoginSession {
         return session != null && session.getAttribute(USER_KEY) != null;
     }
 
+    /** Ends the session, which logs the visitor out. */
     public static void end(HttpSession session) {
         session.invalidate();
     }

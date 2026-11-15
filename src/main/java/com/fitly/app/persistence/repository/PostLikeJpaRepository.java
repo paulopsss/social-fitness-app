@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /** Spring Data writes the SQL for these methods from their names. */
 public interface PostLikeJpaRepository extends JpaRepository<PostLikeEntity, PostLikeId> {
 
+    /** How many likes the post has. */
     long countByPostId(Long postId);
 }

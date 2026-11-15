@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /** Spring Data writes the SQL for these methods from their names. */
 public interface WorkoutTypeJpaRepository extends JpaRepository<WorkoutTypeEntity, Long> {
 
+    /** The workout type with this name (for example "Running"), or empty. */
     Optional<WorkoutTypeEntity> findByName(String name);
 }

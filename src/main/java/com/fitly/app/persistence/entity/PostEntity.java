@@ -78,6 +78,7 @@ public class PostEntity {
         }
     }
 
+    /** Adds a comment to this post and returns it. */
     public CommentEntity addComment(UserEntity author, String text) {
         CommentEntity comment = new CommentEntity(this, author, text);
         comments.add(comment);

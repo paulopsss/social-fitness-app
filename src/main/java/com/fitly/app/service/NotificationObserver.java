@@ -14,6 +14,7 @@ public class NotificationObserver implements WorkoutObserver {
 
     private final Map<String, List<String>> inboxes = new ConcurrentHashMap<>();
 
+    /** Adds a "Workout logged" message to the inbox of the user who did the workout. */
     @Override
     public void onWorkoutLogged(Workout workout) {
         String message = "Workout logged: " + workout.type()
@@ -22,6 +23,7 @@ public class NotificationObserver implements WorkoutObserver {
                 .add(message);
     }
 
+    /** A copy of the messages this user has received so far, oldest first. */
     public List<String> messagesFor(String userEmail) {
         return List.copyOf(inboxes.getOrDefault(userEmail, List.of()));
     }
