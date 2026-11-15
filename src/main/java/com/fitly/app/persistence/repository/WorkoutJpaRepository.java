@@ -9,5 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface WorkoutJpaRepository extends JpaRepository<WorkoutEntity, Long> {
 
     /** Uses index ix_workouts_user_date. Feeds weekly goal progress. */
+    /** All workouts of one user, newest first. */
+    List<WorkoutEntity> findByUserIdOrderByWorkoutDateDescIdDesc(Long userId);
+
     List<WorkoutEntity> findByUserIdAndWorkoutDateBetweenOrderByWorkoutDate(Long userId, LocalDate from, LocalDate to);
 }

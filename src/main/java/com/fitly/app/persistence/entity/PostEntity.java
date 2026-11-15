@@ -98,6 +98,11 @@ public class PostEntity {
         return workout;
     }
 
+    /** Rewrites the text of the post, for example after its workout was edited. */
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getContent() {
         return content;
     }

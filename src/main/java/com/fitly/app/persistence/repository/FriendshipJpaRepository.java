@@ -4,11 +4,18 @@ import com.fitly.app.persistence.entity.FriendshipEntity;
 import com.fitly.app.persistence.entity.FriendshipStatus;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /** Spring Data writes the SQL for these methods from their names. */
 public interface FriendshipJpaRepository extends JpaRepository<FriendshipEntity, Long> {
 
     /** Friend requests waiting for this user to answer. Uses index ix_friendships_addressee. */
+    /** Friendships with this status where the user is on either side. */
+    @Query("select f from FriendshipEntity f where f.status = :status "
+            + "and (f.requester.id = :userId or f.addressee.id = :userId)")
+    List<FriendshipEntity> findForUser(@Param("userId") Long userId, @Param("status") FriendshipStatus status);
+
     List<FriendshipEntity> findByAddresseeIdAndStatus(Long addresseeId, FriendshipStatus status);
 
     /** True if a request exists in either direction, so A->B and B->A are never both stored. */
