@@ -24,6 +24,11 @@ public final class LoginSession {
         return session != null && session.getAttribute(USER_KEY) != null;
     }
 
+    /** The email of the logged in user, or null when nobody is logged in. */
+    public static String email(HttpSession session) {
+        return isActive(session) ? (String) session.getAttribute(USER_KEY) : null;
+    }
+
     /** Ends the session, which logs the visitor out. */
     public static void end(HttpSession session) {
         session.invalidate();
