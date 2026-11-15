@@ -6,6 +6,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/** Registers the login filter on the pages that need a logged in user. */
 @Configuration
 public class SecurityConfig {
 

@@ -18,13 +18,20 @@ import java.util.Base64;
  * after the default count is raised.
  */
 @Component
-public class Pbkdf2PasswordHasher implements PasswordHasher {
+public final class Pbkdf2PasswordHasher implements PasswordHasher {
 
     private static final String ALGORITHM = "PBKDF2WithHmacSHA256";
     private static final String PREFIX = "pbkdf2";
     private static final int DEFAULT_ITERATIONS = 600_000;
     private static final int SALT_BYTES = 16;
     private static final int KEY_BITS = 256;
+
+    /** A stored hash has four parts: prefix, iterations, salt and hash. */
+    private static final int HASH_PARTS = 4;
+    private static final int PREFIX_INDEX = 0;
+    private static final int ITERATIONS_INDEX = 1;
+    private static final int SALT_INDEX = 2;
+    private static final int KEY_INDEX = 3;
 
     private final SecureRandom random = new SecureRandom();
     private final int iterations;
@@ -55,14 +62,18 @@ public class Pbkdf2PasswordHasher implements PasswordHasher {
         if (rawPassword == null || storedHash == null) {
             return false;
         }
+        return verify(rawPassword, storedHash);
+    }
+
+    private static boolean verify(String rawPassword, String storedHash) {
         String[] parts = storedHash.split("\\$");
-        if (parts.length != 4 || !PREFIX.equals(parts[0])) {
+        if (parts.length != HASH_PARTS || !PREFIX.equals(parts[PREFIX_INDEX])) {
             return false;
         }
         try {
-            int storedIterations = Integer.parseInt(parts[1]);
-            byte[] salt = Base64.getDecoder().decode(parts[2]);
-            byte[] expected = Base64.getDecoder().decode(parts[3]);
+            int storedIterations = Integer.parseInt(parts[ITERATIONS_INDEX]);
+            byte[] salt = Base64.getDecoder().decode(parts[SALT_INDEX]);
+            byte[] expected = Base64.getDecoder().decode(parts[KEY_INDEX]);
             byte[] actual = derive(rawPassword, salt, storedIterations);
             return MessageDigest.isEqual(expected, actual);
         } catch (IllegalArgumentException e) {

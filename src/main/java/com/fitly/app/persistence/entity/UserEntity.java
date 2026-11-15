@@ -12,10 +12,12 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Maps the users table. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "users")
 public class UserEntity {
 
@@ -41,10 +43,10 @@ public class UserEntity {
     /** One user logs many workouts (1:N). The workout side owns the foreign key. */
     @OneToMany(mappedBy = "user")
     @OrderBy("workoutDate DESC")
-    private List<WorkoutEntity> workouts = new ArrayList<>();
+    private final List<WorkoutEntity> workouts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<GoalEntity> goals = new ArrayList<>();
+    private final List<GoalEntity> goals = new ArrayList<>();
 
     /** Required by JPA. */
     protected UserEntity() {
@@ -99,10 +101,10 @@ public class UserEntity {
     }
 
     public List<WorkoutEntity> getWorkouts() {
-        return workouts;
+        return Collections.unmodifiableList(workouts);
     }
 
     public List<GoalEntity> getGoals() {
-        return goals;
+        return Collections.unmodifiableList(goals);
     }
 }

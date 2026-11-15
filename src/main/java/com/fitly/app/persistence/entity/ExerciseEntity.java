@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 
 /** Maps the exercises catalog table. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "exercises")
 public class ExerciseEntity {
 

@@ -17,10 +17,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Maps the workouts table: one logged session. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "workouts")
 public class WorkoutEntity {
 
@@ -54,7 +56,7 @@ public class WorkoutEntity {
 
     /** The exercises done in this workout. Saving or deleting the workout does the same to these rows. */
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WorkoutExerciseEntity> exercises = new ArrayList<>();
+    private final List<WorkoutExerciseEntity> exercises = new ArrayList<>();
 
     protected WorkoutEntity() {
     }
@@ -120,6 +122,6 @@ public class WorkoutEntity {
     }
 
     public List<WorkoutExerciseEntity> getExercises() {
-        return exercises;
+        return Collections.unmodifiableList(exercises);
     }
 }

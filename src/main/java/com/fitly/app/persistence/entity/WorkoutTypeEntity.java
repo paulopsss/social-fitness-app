@@ -13,6 +13,7 @@ import org.hibernate.type.SqlTypes;
 
 /** Maps the workout_types lookup table. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "workout_types")
 public class WorkoutTypeEntity {
 

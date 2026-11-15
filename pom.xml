@@ -60,10 +60,73 @@
           <configLocation>config/checkstyle.xml</configLocation>
           <consoleOutput>true</consoleOutput>
           <failOnViolation>true</failOnViolation>
+          <violationSeverity>error</violationSeverity>
+          <suppressionsLocation>config/checkstyle-suppressions.xml</suppressionsLocation>
+          <includeTestSourceDirectory>false</includeTestSourceDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <!-- Run with: mvn checkstyle:checkstyle@metrics (reports every method's complexity) -->
+            <id>metrics</id>
+            <configuration>
+              <configLocation>config/checkstyle-metrics.xml</configLocation>
+              <outputFile>${project.build.directory}/checkstyle-metrics.xml</outputFile>
+              <failOnViolation>false</failOnViolation>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.26.0</version>
+        <configuration>
+          <rulesets>
+            <ruleset>config/pmd-ruleset.xml</ruleset>
+          </rulesets>
+          <printFailingErrors>true</printFailingErrors>
+          <failOnViolation>false</failOnViolation>
+          <includeTests>false</includeTests>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.8.6.6</version>
+        <configuration>
+          <excludeFilterFile>config/spotbugs-exclude.xml</excludeFilterFile>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <failOnError>false</failOnError>
+          <plugins>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.13.0</version>
+            </plugin>
+          </plugins>
         </configuration>
       </plugin>
     </plugins>
   </build>
 </project>
-
-

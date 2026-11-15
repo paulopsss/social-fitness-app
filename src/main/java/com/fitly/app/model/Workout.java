@@ -7,20 +7,20 @@ public record Workout(String userEmail, String type, int durationMinutes, int ca
 
     /** Rejects bad data at the door so every later step can trust a Workout. */
     public Workout {
-        if (userEmail == null || userEmail.isBlank()) {
-            throw new IllegalArgumentException("userEmail is required");
-        }
-        if (type == null || type.isBlank()) {
-            throw new IllegalArgumentException("type is required");
-        }
-        if (durationMinutes <= 0) {
-            throw new IllegalArgumentException("durationMinutes must be greater than 0");
-        }
-        if (calories < 0) {
-            throw new IllegalArgumentException("calories cannot be negative");
-        }
-        if (date == null) {
-            throw new IllegalArgumentException("date is required");
+        requireText(userEmail, "userEmail");
+        requireText(type, "type");
+        require(durationMinutes > 0, "durationMinutes must be greater than 0");
+        require(calories >= 0, "calories cannot be negative");
+        require(date != null, "date is required");
+    }
+
+    private static void requireText(String value, String name) {
+        require(value != null && !value.isBlank(), name + " is required");
+    }
+
+    private static void require(boolean valid, String message) {
+        if (!valid) {
+            throw new IllegalArgumentException(message);
         }
     }
 }

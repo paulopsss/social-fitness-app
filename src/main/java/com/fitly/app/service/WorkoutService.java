@@ -27,10 +27,12 @@ public class WorkoutService {
         this.observers = new CopyOnWriteArrayList<>(observers);
     }
 
+    /** Adds an observer that will be told about every workout logged from now on. */
     public void subscribe(WorkoutObserver observer) {
         observers.add(observer);
     }
 
+    /** Creates the workout and tells every observer about it. Returns the new workout. */
     public Workout logWorkout(String userEmail, String type, int durationMinutes,
                               int calories, LocalDate date) {
         Workout workout = new Workout(userEmail, type, durationMinutes, calories, date);

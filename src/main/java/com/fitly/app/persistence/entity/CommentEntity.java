@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 
 /** Maps the comments table. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "comments")
 public class CommentEntity {
 

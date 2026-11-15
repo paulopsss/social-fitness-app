@@ -16,10 +16,12 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Maps the posts table: a feed entry, optionally about one workout. */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "posts")
 public class PostEntity {
 
@@ -51,7 +53,7 @@ public class PostEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createdAt ASC")
-    private List<CommentEntity> comments = new ArrayList<>();
+    private final List<CommentEntity> comments = new ArrayList<>();
 
     protected PostEntity() {
     }
@@ -77,6 +79,7 @@ public class PostEntity {
         }
     }
 
+    /** Adds a comment to this post and returns it. */
     public CommentEntity addComment(UserEntity author, String text) {
         CommentEntity comment = new CommentEntity(this, author, text);
         comments.add(comment);
@@ -108,6 +111,6 @@ public class PostEntity {
     }
 
     public List<CommentEntity> getComments() {
-        return comments;
+        return Collections.unmodifiableList(comments);
     }
 }

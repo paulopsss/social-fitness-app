@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
  * Two foreign keys point at users, which is how a many-to-many from a table to itself is stored.
  */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "friendships")
 public class FriendshipEntity {
 
@@ -63,6 +64,7 @@ public class FriendshipEntity {
         }
     }
 
+    /** Accepts or declines the request and records when the answer was given. */
     public void respond(boolean accepted) {
         this.status = accepted ? FriendshipStatus.ACCEPTED : FriendshipStatus.DECLINED;
         this.respondedAt = LocalDateTime.now();

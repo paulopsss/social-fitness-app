@@ -18,6 +18,7 @@ import java.math.BigDecimal;
  * sets, reps and weight.
  */
 @Entity
+@SuppressWarnings("PMD.DataClass") // JPA entities are data holders by design
 @Table(name = "workout_exercises")
 public class WorkoutExerciseEntity {
 

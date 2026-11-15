@@ -10,5 +10,6 @@ import com.fitly.app.model.Workout;
  */
 public interface WorkoutObserver {
 
+    /** Called once for every workout that is logged. */
     void onWorkoutLogged(Workout workout);
 }

@@ -14,7 +14,9 @@ package com.fitly.app.security;
  */
 public interface PasswordHasher {
 
+    /** Turns a raw password into the value that is stored. Never returns the raw password. */
     String hash(String rawPassword);
 
+    /** True only when the raw password produced the stored value. Never throws for bad input. */
     boolean matches(String rawPassword, String storedHash);
 }

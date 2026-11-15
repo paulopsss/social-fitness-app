@@ -20,31 +20,34 @@ public class AuthController {
         this.authService = authService;
     }
 
+    /** Checks the form details; on success starts a session and opens the dashboard. */
     @PostMapping("/login")
     public String login(@RequestParam String email,
                         @RequestParam String password,
                         HttpSession session) {
         if (authService.authenticate(email, password)) {
             LoginSession.start(session, email);
-            return "redirect:" + Pages.DASHBOARD;
+            return Pages.redirectTo(Pages.DASHBOARD);
         }
-        return "redirect:" + Pages.LOGIN + Pages.ERROR_QUERY;
+        return Pages.redirectTo(Pages.LOGIN + Pages.ERROR_QUERY);
     }
 
+    /** Creates the account; on success logs the new user in and opens the dashboard. */
     @PostMapping("/register")
     public String register(@RequestParam String email,
                            @RequestParam String password,
                            HttpSession session) {
         if (!authService.register(email, password)) {
-            return "redirect:" + Pages.REGISTER + Pages.ERROR_QUERY;
+            return Pages.redirectTo(Pages.REGISTER + Pages.ERROR_QUERY);
         }
         LoginSession.start(session, email);
-        return "redirect:" + Pages.DASHBOARD;
+        return Pages.redirectTo(Pages.DASHBOARD);
     }
 
+    /** Ends the session and returns to the landing page. */
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         LoginSession.end(session);
-        return "redirect:" + Pages.HOME;
+        return Pages.redirectTo(Pages.HOME);
     }
 }
