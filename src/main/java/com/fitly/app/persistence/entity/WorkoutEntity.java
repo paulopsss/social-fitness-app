@@ -77,6 +77,16 @@ public class WorkoutEntity {
         }
     }
 
+    /** Replaces the details of this workout. The caller has already checked the values. */
+    public void update(WorkoutTypeEntity newType, LocalDate newDate, int newMinutes, int newCalories,
+                       String newNotes) {
+        this.workoutType = newType;
+        this.workoutDate = newDate;
+        this.durationMinutes = newMinutes;
+        this.calories = newCalories;
+        this.notes = newNotes;
+    }
+
     /** Keeps both sides of the relationship in step. */
     public WorkoutExerciseEntity addExercise(ExerciseEntity exercise, int sets, int reps,
                                              BigDecimal weightKg) {
